@@ -20,7 +20,6 @@ Virtual attributes can be set to :boolean => true
   - This will parse ['yes', 'true', '1', 1] to be true
   - and ['no', 'false', '0', 0] to be false
   - otherwise will be nil
-  
   - this allows them to be used transparently with checkboxes etc in forms
 
 If using attr_accessible in your model, the virtual attribute should be added to the list to, or you can pass:
