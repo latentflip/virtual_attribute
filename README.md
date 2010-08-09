@@ -24,7 +24,9 @@ Virtual attributes can be set to :boolean => true
 
 If using attr_accessible in your model, the virtual attribute should be added to the list to, or you can pass:
 
-    :attr_type => :attr_accessible as an option as shown above
+    :attr_type => :attr_accessible 
+    
+as an option as shown above to have it done for you
 
 Will document better later, until then:
   phil at latentflip dot com
