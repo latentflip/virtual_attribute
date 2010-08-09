@@ -16,6 +16,7 @@ example:
 
 
 Virtual attributes can be set to :boolean => true
+
   - This will parse ['yes', 'true', '1', 1] to be true
   - and ['no', 'false', '0', 0] to be false
   - otherwise will be nil
