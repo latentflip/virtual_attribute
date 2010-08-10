@@ -1,4 +1,5 @@
 require "rubygems"
+require "spec"
 require "active_record"
 require "logger"
 

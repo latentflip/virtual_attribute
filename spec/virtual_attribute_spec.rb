@@ -1,5 +1,6 @@
-require "virtual_attribute"
 require 'spec_helper'
+require 'rubygems'
+require "virtual_attribute"
 
 class TheTester < Tableless
   virtual_attribute :normal
