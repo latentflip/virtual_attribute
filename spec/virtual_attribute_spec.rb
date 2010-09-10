@@ -4,11 +4,14 @@ require "virtual_attribute"
 
 class TheTester < Tableless
   virtual_attribute :normal
-  virtual_attribute :truey, :boolean => true, :attr_type => :attr_accessible
-  virtual_attribute :falsy, :boolean => true
-  virtual_attribute :nily, :boolean => true
-end
+  virtual_attribute :truey, :type => :boolean, :attr_type => :attr_accessible
+  virtual_attribute :falsy, :type => :boolean
+  virtual_attribute :nily, :type => :boolean
 
+  virtual_attribute :dated_on, :type => :date, :attr_type => :attr_accessible
+  virtual_attribute :integery, :type => :integer, :attr_type => :attr_accessible
+  virtual_attribute :floaty, :type => :float, :attr_type => :attr_accessible
+end
 
 describe TheTester do
   before(:each) do
@@ -44,6 +47,21 @@ describe TheTester do
     end
   end
 
+  it "should create a float attribute" do
+    @tester = TheTester.new(:floaty => "1.23")
+    @tester.floaty.should == 1.23
+  end
+
+  it "should create nil with an incorrect float attribute" do
+    @tester = TheTester.new(:floaty => "1.23f3er")
+    @tester.floaty.should == nil
+  end
+
+  it "should create an integer attribute" do
+    @tester = TheTester.new(:integery => "123")
+    @tester.integery.should == 123
+  end
+
   it "should create accessible attributes if :attr_type => accessible is used" do
     @another_tester = TheTester.new(:truey => '1')
     @another_tester.truey.should == true
@@ -52,5 +70,10 @@ describe TheTester do
   it "should not create accessible attributes if :attr_type => accessible is not used" do
     @another_tester = TheTester.new(:falsy => 'no')
     @another_tester.truey.should == nil #falsy will not be saved
+  end
+
+  it "should create a date attribute" do
+    @another_tester = TheTester.new({'dated_on(3i)' => "4", 'dated_on(2i)' => "10", 'dated_on(1i)' => "2010"})
+    @another_tester.dated_on.should == Date.civil(2010,10,4)
   end
 end

@@ -4,7 +4,7 @@ class Module
     inst_var = "@#{name.to_s}"
     module_eval do 
 
-      if options[:boolean]
+      if options[:boolean] or (options[:type] == :boolean)
         define_method(name_equals) do |val|
           val = val.to_s.strip
           if ['1', 'true', 'yes'].include?(val)
@@ -13,10 +13,30 @@ class Module
             instance_variable_set(inst_var, false)
           end
         end
+      elsif (options[:type] == :float)
+        define_method(name_equals) do |val|
+          begin
+            instance_variable_set(inst_var, Float(val))
+          rescue ArgumentError
+            instance_variable_set(inst_var, nil)
+          end
+        end
+      elsif (options[:type] == :integer)
+        define_method(name_equals) do |val|
+          begin
+            instance_variable_set(inst_var, Integer(val))
+          rescue ArgumentError
+            instance_variable_set(inst_var, nil)
+          end
+        end
       else
         define_method(name_equals) do |val|
           instance_variable_set(inst_var, val)
         end
+      end
+
+      if [:date, :time, :datetime].include? options[:type]
+        columns_hash[name.to_s] = ActiveRecord::ConnectionAdapters::Column.new(name.to_s, nil, options[:type].to_s)
       end
 
       define_method(name) do
