@@ -62,6 +62,11 @@ describe TheTester do
     @tester.integery.should == 123
   end
 
+  it "should create nil with an incorrect integer attribute" do
+    @tester = TheTester.new(:integery => "blah")
+    @tester.integery.should == nil
+  end
+
   it "should create accessible attributes if :attr_type => accessible is used" do
     @another_tester = TheTester.new(:truey => '1')
     @another_tester.truey.should == true
